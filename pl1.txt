@@ -1,0 +1,145 @@
+/*declare
+  name_var varchar2(30)*/
+begin
+/*select name
+into name_var
+from emp_table
+where last_name='abc'*/
+dbms_output.PUT_LINE('to jest tekst');
+end;
+
+
+declare 
+  v_var varchar(30) := 'Hello world';
+BEGIN
+  dbms_output.put_line(v_var);
+  EXCEPTION
+  when no_data_found then
+  null;
+END;
+
+create procedure do_something
+as
+begin
+null;
+end;
+
+create or replace function ab1(a in number, b in number)
+return number
+as
+begin
+return a*b;
+end;
+
+select ab1(3,4) from dual;
+
+
+declare 
+  type r_person is RECORD (
+    fname VARCHAR2(30),
+    lname VARCHAR2(30),
+    age NUMBER  );
+    
+    v_person r_person;
+begin
+  v_person.fname := 'abc';
+  v_person.lname := 'xyz';
+  v_person.age := 13;
+end;
+
+declare
+  Type t_array is table of varchar2(30)
+    index by binary_integer;
+    
+    v_array t_array;
+begin
+  v_array(1) := 'hello world';
+  v_array(2) := 'hello again';
+end;
+
+declare
+type r_person is RECORD (
+    fname VARCHAR2(30),
+    lname VARCHAR2(30),
+    age NUMBER  );
+  Type t_person is table of r_person
+    index by binary_integer;
+    
+    v_person t_person;
+begin
+  v_person(1).fname :='abc';
+  v_person(1).lname:='xyz';
+  v_person(1).age:=13;
+  
+  v_person(2).fname:='nan';
+  v_person(2).lname:='age';
+  v_person(2).age:=18;
+end;
+
+create or replace type o_person as object (
+  fname VARCHAR2(30),
+  lname VARCHAR2(30),
+  age NUMBER
+);
+
+declare 
+  v_person o_person;
+begin
+  v_person := o_person('abc', 'xyz', 13);
+end;
+
+create or replace type o_person_col as table of o_person;
+
+declare 
+  v_person o_person_col := o_person_col();
+  
+begin
+  v_person.extend;
+  v_person(1) := o_person('abc', 'xyz', 13);
+end;
+
+
+declare
+  V_con NUMBER :=0;
+  V_mess CONSTANT VARCHAR2(30) := 'Row: ';
+begin
+  LOOP
+    EXIT WHEN V_con >= 10;
+    V_con := V_con + 1;
+    dbms_output.put_line(V_mess || to_char(V_con));
+    end loop;
+end;
+
+create or replace procedure text_it(p_message varchar2) as
+begin
+dbms_output.put_line(p_message);
+end;
+
+begin
+text_it(p_message => 'witaj');
+end;
+
+create or replace procedure inc(t1 in out number)
+as
+begin
+t1 := t1 + 1;
+end;
+
+declare 
+ abc number := 5;
+begin
+inc(abc);
+text_it(to_char(abc));
+end;
+
+declare
+  v_name varchar(30) :='abcg';
+begin
+  if v_name ='abc' then
+    dbms_output.put_line('to abc');
+  elsif v_name ='xyz' then
+    dbms_output.put_line('to jest xyz');
+  else
+    dbms_output.put_line('blad');
+  end if;
+end;
